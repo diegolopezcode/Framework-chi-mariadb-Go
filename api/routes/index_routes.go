@@ -22,6 +22,8 @@ func SetupRoutes(app *chi.Mux) {
 
 		r.Post("/createrole", handler.CreateRole)
 		r.Post("/login", handler.Login)
+		r.Get("/getrole", handler.GetRoleById)
+		r.Put("/updaterole", handler.UpdateRole)
 
 	})
 
