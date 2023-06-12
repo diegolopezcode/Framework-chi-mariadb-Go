@@ -24,6 +24,9 @@ func SetupRoutes(app *chi.Mux) {
 		r.Post("/login", handler.Login)
 		r.Get("/getrole", handler.GetRoleById)
 		r.Put("/updaterole", handler.UpdateRole)
+		r.Post("/createpermission", handler.CreatePermission)
+		r.Get("/getpermission", handler.GetPermissionById)
+		r.Put("/updatepermission", handler.UpdatePermission)
 
 	})
 
