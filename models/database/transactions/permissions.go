@@ -1,14 +1,11 @@
 package transactions
 
 import (
-	"fmt"
-
 	database "github.com/diegolopezcode/api-crud-complete-chi/models/database/config"
 	"github.com/diegolopezcode/api-crud-complete-chi/models/database/models"
 )
 
 func CreatePermission(name string) (*models.Permission, error) {
-	fmt.Println("Llega Name", name)
 	con := database.Connect()
 	permission := &models.Permission{Name: name}
 	err := con.Create(permission)
@@ -20,7 +17,6 @@ func CreatePermission(name string) (*models.Permission, error) {
 }
 
 func GetPermissions() ([]*models.Permission, error) {
-	fmt.Println("Llega Solo")
 	con := database.Connect()
 	permission := []*models.Permission{}
 	err := con.Find(&permission)
@@ -32,7 +28,6 @@ func GetPermissions() ([]*models.Permission, error) {
 }
 
 func GetPermissionById(id int) (*models.Permission, error) {
-	fmt.Println("Llega id", id)
 	con := database.Connect()
 	permission := &models.Permission{
 		ID: uint(id),
@@ -41,7 +36,6 @@ func GetPermissionById(id int) (*models.Permission, error) {
 	if err.Error != nil {
 		return nil, err.Error
 	}
-	fmt.Println("Llega Permission", permission)
 	return permission, nil
 }
 
@@ -51,7 +45,6 @@ type Permissions struct {
 }
 
 func UpdatePermission(id int, name string) (*models.Permission, error) {
-	fmt.Println("Llega con id and anme", id, name)
 	con := database.Connect()
 	findPermission := &models.Permission{ID: uint(id),
 		Name: name}
@@ -60,6 +53,5 @@ func UpdatePermission(id int, name string) (*models.Permission, error) {
 		return nil, err.Error
 	}
 
-	fmt.Println("Llega Permission", findPermission)
 	return findPermission, nil
 }
