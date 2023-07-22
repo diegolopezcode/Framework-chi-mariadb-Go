@@ -5,7 +5,12 @@ import (
 
 	"github.com/diegolopezcode/api-crud-complete-chi/api/paths"
 	"github.com/diegolopezcode/api-crud-complete-chi/configs"
-	"github.com/diegolopezcode/api-crud-complete-chi/handler"
+	Auth "github.com/diegolopezcode/api-crud-complete-chi/handler/login"
+	HandlerPermissions "github.com/diegolopezcode/api-crud-complete-chi/handler/permissions"
+	HandlerRolePermissions "github.com/diegolopezcode/api-crud-complete-chi/handler/role_permissions"
+	HandlerRoles "github.com/diegolopezcode/api-crud-complete-chi/handler/roles"
+	HandlerTasks "github.com/diegolopezcode/api-crud-complete-chi/handler/tasks"
+	HandlerUsers "github.com/diegolopezcode/api-crud-complete-chi/handler/users"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 )
@@ -20,18 +25,22 @@ func SetupRoutes(app *chi.Mux) {
 			w.Write([]byte("hi"))
 		})
 
-		r.Post("/createrole", handler.CreateRole)
-		r.Post("/login", handler.Login)
-		r.Get("/getrole", handler.GetRoleById)
-		r.Put("/updaterole", handler.UpdateRole)
-		r.Post("/createpermission", handler.CreatePermission)
-		r.Get("/getpermission", handler.GetPermissionById)
-		r.Put("/updatepermission", handler.UpdatePermission)
-		r.Post("/createrolepermission", handler.CreateRolePermission)
-		r.Get("/getrolepermission", handler.GetRolePermissionById)
-		r.Post("/createuser", handler.CreateUser)
-		r.Get("/getuser", handler.GetUsers)
-		r.Patch("/updateuser", handler.UpdateUser)
+		r.Post("/createrole", HandlerRoles.CreateRole)
+		r.Post("/login", Auth.Login)
+		r.Get("/getrole", HandlerRoles.GetRoleById)
+		r.Put("/updaterole", HandlerRoles.UpdateRole)
+		r.Post("/createpermission", HandlerPermissions.CreatePermission)
+		r.Get("/getpermission", HandlerPermissions.GetPermissionById)
+		r.Put("/updatepermission", HandlerPermissions.UpdatePermission)
+		r.Post("/createrolepermission", HandlerRolePermissions.CreateRolePermission)
+		r.Get("/getrolepermission", HandlerRolePermissions.GetRolePermissionById)
+		r.Post("/createuser", HandlerUsers.CreateUser)
+		r.Get("/getuser", HandlerUsers.GetUsers)
+		r.Patch("/updateuser", HandlerUsers.UpdateUser)
+		r.Post("/createtask", HandlerTasks.CreateTask)
+		r.Get("/gettask", HandlerTasks.GetTasks)
+		r.Patch("/updatetask", HandlerTasks.UpdateTask)
+		r.Delete("/deletetask", HandlerTasks.DeleteTask)
 
 	})
 
@@ -41,7 +50,7 @@ func SetupRoutes(app *chi.Mux) {
 		r.Use(jwtauth.Verifier(jwtauth.New("HS256", []byte(configs.Config("JWT_SECRET")), nil)))
 		r.Use(jwtauth.Authenticator)
 
-		r.Get("/{paths}", handler.Indexar)
+		// r.Get("/{paths}", handler.Indexar)
 
 	})
 }
