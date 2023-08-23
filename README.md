@@ -1,2 +1,2 @@
-# Practice Framework Chi and Mariadb
+# Practice Framework CHI and Mariadb
 
